@@ -1,0 +1,5 @@
+-U [user] -P [password] -S [SERVER] //PROD
+-U [user] -P [password] -S [SERVER] //TEST
+PROD_DOMAIN
+TEST_DOMAIN
+STAFF_DOMAIN
