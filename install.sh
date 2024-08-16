@@ -33,19 +33,14 @@ EOF
 
 usage
 
-case `grep -Fxq 'egil.sh' ~/.zshrc ; echo $?` in
-  0)
+if grep -Fxq 'alias egil'  ~/.zshrc
+then
     echo "EGIL-KOMMANDON found"
-    download_egil
-    ;;
-  1)
+else
     echo "EGIL-KOMMANDON not found"
     install_egil
-    download_egil
-    ;;
-  *)
-    echo "error finding .kommandon"
-    ;;
-esac
+fi
+
+download_egil
 
 echo "Done! Now type 'exit' and restart terminal"
