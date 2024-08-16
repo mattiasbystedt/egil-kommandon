@@ -33,7 +33,7 @@ EOF
 
 usage
 
-case `grep 'egil.sh' ~/.zshrc >/dev/null; echo $?` in
+case `grep -Fxq 'egil.sh' ~/.zshrc ; echo $?` in
   0)
     echo "EGIL-KOMMANDON found"
     download_egil
