@@ -4,7 +4,7 @@ function install_egil {
   echo "Add egilkommandon.sh to system?"
   select yn in "Yes" "No"; do
       case $yn in
-          Yes ) echo -e "alias egilcommand='~/gam/./.egilkommandon.sh'" >> ~/.zshrc; break;;
+          Yes ) echo -e "alias egil='~/gam/./.egilkommandon.sh'" >> ~/.zshrc; break;;
           No ) exit;;
       esac
   done
@@ -33,7 +33,7 @@ EOF
 
 usage
 
-case `grep 'alias egilcommand='~/gam/./.egilkommandon.sh'' ~/.zshrc >/dev/null; echo $?` in
+case `grep 'alias egil='~/gam/./.egilkommandon.sh'' ~/.zshrc >/dev/null; echo $?` in
   0)
     echo "EGIL-KOMMANDON found"
     download_egil
