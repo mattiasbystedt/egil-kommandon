@@ -1,20 +1,23 @@
 #!/bin/zsh
 
-# TODO - adapt setup script to EGIL-KOMMANDON
+function install_egil {
+  echo "Add egilkommandon.sh to system?"
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) echo -e "alias egilcommand='~/gam/./.egilkommandon.sh'" >> ~/.zshrc; break;;
+          No ) exit;;
+      esac
+  done
+}
 
-checkos=$(uname -s)
-echo $checkos
-
-# install or update new commands
-add_kommandon()
-{
-  # check for dir "gam"
-  if [ -d ~/gam ]; then
-    echo "dir 'gam' found"
-  else
-    mkdir ~/gam
-  fi
-  curl https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/egil.sh > ~/gam/.egilkommandon.sh
+function download_egil {
+  echo "Do you wish to download the latest egil-kommando file?"
+  select yn in "Yes" "No"; do
+      case $yn in
+          Yes ) curl https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/egil.sh > ~/gam/.egilkommandon.sh; break;;
+          No ) exit;;
+      esac
+  done
 }
 
 # message during install
@@ -30,28 +33,19 @@ EOF
 
 usage
 
-# setup AD user and password
-
-# check install or update
-zsh_string="if [ -f ~/gam/.egilkommandon ]; then\n    . ~/.kommandon\n    source ~/.kommandon\nfi"
-profile_string="source ~/.zshrc"
-case `grep "kommandon" ~/.bashrc >/dev/null; echo $?` in
+case `grep 'alias egilcommand='~/gam/./.egilkommandon.sh'' ~/.zshrc >/dev/null; echo $?` in
   0)
-    echo "EGIL-KOMMANDON found - updating with new commands"
-    add_kommandon
+    echo "EGIL-KOMMANDON found"
+    download_egil
     ;;
   1)
-    echo "KOMMANDON not found - first install"
-    echo -e ${bash_string} >> ~/.bashrc
-    if [ "$checkos" = ""Darwin"" ]; then
-      touch ~/.bash_profile
-      echo -e ${profile_string} >> ~/.bash_profile
-    fi
-    add_kommandon
+    echo "EGIL-KOMMANDON not found"
+    install_egil
+    download_egil
     ;;
   *)
     echo "error finding .kommandon"
     ;;
 esac
 
-echo "Now type 'exit' and restart terminal"
+echo "Done! Now type 'exit' and restart terminal"
