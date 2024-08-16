@@ -1,5 +1,13 @@
 #!/bin/zsh
 
+check_arch=$(uname -m)
+#echo $check_arch
+if [[ ${check_arch} == 'x86_64' ]]; then
+  sqlcmdpath='/usr/local/Cellar/mssql-tools18/18.*/'
+elif [[ ${check_arch} == 'arm64' ]]; then
+  sqlcmdpath='/opt/homebrew/Cellar/mssql-tools18/18.*/'
+fi
+
 # add colors
 autoload colors; colors
 green="$fg[green]"
@@ -190,7 +198,7 @@ esac
 ## INTEL:
 #/usr/local/Cellar/mssql-tools18/18.4.1.1/bin/./sqlcmd -U [user] -P [password] -S [SERVER] -C -W -s';'
 
-RETVAL=$(eval "/usr/local/Cellar/mssql-tools18/18.*/bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
+RETVAL=$(eval "${sqlcmdpath}bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
 ${sqlstring}
 GO
 EXIT
