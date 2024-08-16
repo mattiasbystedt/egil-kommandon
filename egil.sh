@@ -187,8 +187,10 @@ case ${1:u} in
 esac
 
 #/opt/homebrew/Cellar/mssql-tools18/18.2.1.1/bin/./sqlcmd -U [user] -P [password] -S [SERVER] -C -W -s';'
+## INTEL:
+#/usr/local/Cellar/mssql-tools18/18.4.1.1/bin/./sqlcmd -U [user] -P [password] -S [SERVER] -C -W -s';'
 
-RETVAL=$(eval "/opt/homebrew/Cellar/mssql-tools18/18.2.1.1/bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
+RETVAL=$(eval "/usr/local/Cellar/mssql-tools18/18.4.1.1/bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
 ${sqlstring}
 GO
 EXIT
