@@ -190,7 +190,7 @@ esac
 ## INTEL:
 #/usr/local/Cellar/mssql-tools18/18.4.1.1/bin/./sqlcmd -U [user] -P [password] -S [SERVER] -C -W -s';'
 
-RETVAL=$(eval "/usr/local/Cellar/mssql-tools18/18.4.1.1/bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
+RETVAL=$(eval "/usr/local/Cellar/mssql-tools18/18.*/bin/./sqlcmd $EGIL_CONF -C -W -s';'" << EOF
 ${sqlstring}
 GO
 EXIT
