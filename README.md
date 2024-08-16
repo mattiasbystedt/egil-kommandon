@@ -2,4 +2,4 @@
 setup some usefull commands
 
 Install:
-- `bash <(curl -s -S -L https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/install.sh)`
+- `zsh <(curl -s -S -L https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/install.sh)`
