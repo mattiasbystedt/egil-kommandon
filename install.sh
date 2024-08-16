@@ -4,7 +4,7 @@ function install_egil {
   echo "Add egilkommandon.sh to system?"
   select yn in "Yes" "No"; do
       case $yn in
-          Yes ) echo -e "alias egil='~/gam/./.egilkommandon.sh'" >> ~/.zshrc; break;;
+          Yes ) echo -e "alias egil='~/gam/./.egil.sh'" >> ~/.zshrc; break;;
           No ) exit;;
       esac
   done
@@ -14,7 +14,7 @@ function download_egil {
   echo "Do you wish to download the latest egil-kommando file?"
   select yn in "Yes" "No"; do
       case $yn in
-          Yes ) curl https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/egil.sh > ~/gam/.egilkommandon.sh; break;;
+          Yes ) curl https://raw.githubusercontent.com/mattiasbystedt/egil-kommandon/master/egil.sh > ~/gam/.egil.sh; break;;
           No ) exit;;
       esac
   done
