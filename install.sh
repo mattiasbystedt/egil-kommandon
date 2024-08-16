@@ -33,7 +33,7 @@ EOF
 
 usage
 
-case `grep 'alias egil='~/gam/./.egilkommandon.sh'' ~/.zshrc >/dev/null; echo $?` in
+case `grep 'alias egil='~/gam/./.egil.sh'' ~/.zshrc >/dev/null; echo $?` in
   0)
     echo "EGIL-KOMMANDON found"
     download_egil
