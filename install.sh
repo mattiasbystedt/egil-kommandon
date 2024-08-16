@@ -5,7 +5,7 @@ function install_egil {
   select yn in "Yes" "No"; do
       case $yn in
           Yes ) echo -e "alias egil='~/gam/./.egil.sh'" >> ~/.zshrc; break;;
-          No ) exit;;
+          No ) break;;
       esac
   done
 }
