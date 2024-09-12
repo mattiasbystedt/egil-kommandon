@@ -73,7 +73,7 @@ case ${1:u} in
   STUDENT)
     sqlstring="SELECT Student.email,Student.civicNo,Student.givenName,Student.familyName,\
               Student.schoolYear,Student.schoolType,Student.programCode,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.userName \
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.eduPersonPrincipalName \
               FROM Student \
               INNER JOIN SchoolUnit ON Student.schoolUnit=SchoolUnit.externalId \
               WHERE Student.email = '${searchemail}'"
@@ -81,7 +81,7 @@ case ${1:u} in
   STUDENTPNR)
     sqlstring="SELECT Student.email,Student.civicNo,Student.givenName,Student.familyName,\
               Student.schoolYear,Student.schoolType,Student.programCode,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.userName \
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.eduPersonPrincipalName \
               FROM Student \
               INNER JOIN SchoolUnit ON Student.schoolUnit=SchoolUnit.externalId \
               WHERE Student.civicNo LIKE '%${2//-}%'"
@@ -89,10 +89,10 @@ case ${1:u} in
   STUDENTEPPN)
     sqlstring="SELECT Student.email,Student.civicNo,Student.givenName,Student.familyName,\
               Student.schoolYear,Student.schoolType,Student.programCode,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.userName \
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Student.eduPersonPrincipalName \
               FROM Student \
               INNER JOIN SchoolUnit ON Student.schoolUnit=SchoolUnit.externalId \
-              WHERE Student.userName = '${query}'"
+              WHERE Student.eduPersonPrincipalName = '${query}'"
     ;;
   STUDENTGROUPS)
     sqlstring="SELECT Student.email,StudentGroup.displayName,\
@@ -108,7 +108,7 @@ case ${1:u} in
   STAFF)
     sqlstring="SELECT TeacherEmail.email,Teacher.civicNo,Teacher.givenName,\
               Teacher.familyName,Employment.employmentRole,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.userName\
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.eduPersonPrincipalName\
               FROM TeacherEmail \
               INNER JOIN Teacher ON TeacherEmail.teacherId=Teacher.externalId \
               FULL OUTER JOIN Employment ON TeacherEmail.teacherId=Employment.teacherId \
@@ -118,7 +118,7 @@ case ${1:u} in
   STAFFPNR)
     sqlstring="SELECT TeacherEmail.email,Teacher.civicNo,Teacher.givenName,\
               Teacher.familyName,Employment.employmentRole,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.userName\
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.eduPersonPrincipalName\
               FROM Teacher \
               INNER JOIN TeacherEmail ON TeacherEmail.teacherId=Teacher.externalId \
               FULL OUTER JOIN Employment ON TeacherEmail.teacherId=Employment.teacherId \
@@ -128,12 +128,12 @@ case ${1:u} in
   STAFFEPPN)
     sqlstring="SELECT TeacherEmail.email,Teacher.civicNo,Teacher.givenName,\
               Teacher.familyName,Employment.employmentRole,\
-              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.userName\
+              SchoolUnit.schoolUnitCode,SchoolUnit.displayName,Teacher.eduPersonPrincipalName\
               FROM Teacher \
               INNER JOIN TeacherEmail ON TeacherEmail.teacherId=Teacher.externalId \
               FULL OUTER JOIN Employment ON TeacherEmail.teacherId=Employment.teacherId \
               FULL OUTER JOIN SchoolUnit ON Employment.schoolUnit=SchoolUnit.externalId \
-              WHERE Teacher.userName = '${query}'"
+              WHERE Teacher.eduPersonPrincipalName = '${query}'"
     ;;
   REKTOR)
     sqlstring="SELECT Teacher.givenName,Teacher.familyName,TeacherEmail.email,\
@@ -162,15 +162,15 @@ case ${1:u} in
   EPPN)
     sqlstring="SELECT TeacherEmail.email,Teacher.civicNo,Teacher.givenName,\
               Teacher.familyName,\
-              Teacher.userName\
+              Teacher.eduPersonPrincipalName\
               FROM Teacher \
               INNER JOIN TeacherEmail ON TeacherEmail.teacherId=Teacher.externalId \
-              WHERE Teacher.userName = '${query}'
+              WHERE Teacher.eduPersonPrincipalName = '${query}'
               UNION
               SELECT Student.email,Student.civicNo,Student.givenName,Student.familyName,\
-              Student.userName \
+              Student.eduPersonPrincipalName \
               FROM Student \
-              WHERE Student.userName = '${query}'"
+              WHERE Student.eduPersonPrincipalName = '${query}'"
     ;;
   *)
     echo "${cyan}USAGE examples:${reset}"
@@ -223,7 +223,7 @@ elif [[ $sortstring == "rektor" ]]; then
 elif [[ $sortstring == "none" ]]; then
   echo ${RETVAL//,/.}
 else
-  echo ${RETVAL//,/.} | gsed '1 s/displayName/schoolUnit.displayName/' | gsed '1 s/userName/userName(EPPN)/' \
+  echo ${RETVAL//,/.} | gsed '1 s/displayName/schoolUnit.displayName/' | gsed '1 s/eduPersonPrincipalName/eduPersonPrincipalName(EPPN)/' \
       | gsed 's/^;/NULL;/' | gsed 's/;;/;NULL;/' |gsed 2d | gsed '$ d' | gsed '$ d' \
       | tee ~/gam/EGIL_out.csv | gsed 's/NULL/-/g' | column -t -s";"
 fi
