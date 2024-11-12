@@ -38,7 +38,7 @@ if [[ ( ${1:u} =~ ^STUDENT$ ) || ( ${1:u} =~ ^STUDENTGROUPS$ ) ]]; then
   else
     searchemail=${2}${DOMAIN}
   fi
-elif [[ ( ${1:u} =~ ^STUDENTEPPN$ ) || ( ${1:u} =~ ^STAFFEPPN$ ) || ( ${1:u} =~ ^EPPN$ ) ]]; then
+elif [[ ( ${1:u} =~ ^STUDENTEPPN$ ) || ( ${1:u} =~ ^STAFFEPPN$ ) || ( ${1:u} =~ ^EPPN$ ) || ( ${1:u} =~ ^STAFFACTIVITY$ ) ]]; then
   if [[ ${2} == *"@"* ]]; then
     query=${2}
   else
@@ -55,14 +55,6 @@ fi
 # read (lower) command arguments
 case ${1:u} in
 
-#  SCHOOLTYPE)
-#    sqlstring="SELECT SchoolUnit.schoolType,SchoolUnit.displayName,SchoolUnit.schoolUnitCode,SchoolUnitGroup.displayName \
-#              FROM SchoolUnit \
-#              FULL OUTER JOIN SchoolUnitGroup \
-#              ON SchoolUnit.schoolUnitGroup=SchoolUnitGroup.externalId \
-#              WHERE schoolType = '${2}'"
-#    sortstring="schools"
-#    ;;
   SCHOOLS)
     sqlstring="SELECT SchoolUnit.schoolType,SchoolUnit.displayName,\
               SchoolUnit.schoolUnitCode,SchoolUnitGroup.displayName \
@@ -134,6 +126,18 @@ case ${1:u} in
               FULL OUTER JOIN Employment ON TeacherEmail.teacherId=Employment.teacherId \
               FULL OUTER JOIN SchoolUnit ON Employment.schoolUnit=SchoolUnit.externalId \
               WHERE Teacher.eduPersonPrincipalName = '${query}'"
+    ;;
+  STAFFACTIVITY)
+    sqlstring="SELECT TeacherEmail.email,StudentGroup.displayName,\
+              StudentGroup.studentGroupType,StudentGroup.schoolUnitGroupCode,\
+              StudentGroup.schoolType,StudentGroup.parentActivity,TeacherRole.studentGroupId,\
+              ParentActivitiesDNP.schoolType,ParentActivitiesDNP.displayName \
+              FROM TeacherEmail \
+              INNER JOIN Teacher ON TeacherEmail.teacherId=Teacher.externalId \
+              FULL OUTER JOIN TeacherRole ON TeacherRole.teacherId =Teacher.externalId \
+              FULL OUTER JOIN StudentGroup ON TeacherRole.studentGroupId=StudentGroup.externalId \
+              FULL OUTER JOIN ParentActivitiesDNP ON StudentGroup.parentActivity=ParentActivitiesDNP.id \
+              WHERE TeacherEmail.email = '${query}'"
     ;;
   REKTOR)
     sqlstring="SELECT Teacher.givenName,Teacher.familyName,TeacherEmail.email,\
