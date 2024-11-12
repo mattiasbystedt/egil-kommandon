@@ -186,6 +186,7 @@ case ${1:u} in
     echo "${green}egil staff $fg[yellow]mattias.alqmawi${reset} //search for staff via email (with or without DOMAIN)"
     echo "${green}egil staffPNR $fg[yellow]19740422XX18${reset} //search for staff via civicNo (pnr)"
     echo "${green}egil staffEPPN $fg[yellow]91ee1a7c-8394-4cf1-be10-6e71dbff3060${reset} //search for staff via EPPN (with or without DOMAIN)"
+    echo "${green}egil staffACTIVITY $fg[yellow]mattias.alqmawi${reset} //search for staff actvitites via email (with or without DOMAIN)"
 #    echo "${green}egil staffgroups $fg[yellow]lisa.persson${reset} //(NOT APPLICABLE)"
     echo "${green}egil schools${reset} //a list of all schools"
 #    echo "${green}egil schooltype $fg[yellow]GY${reset} //a list of all schools based on schoolType"
