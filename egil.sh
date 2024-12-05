@@ -1,12 +1,6 @@
 #!/bin/zsh
 
-check_arch=$(uname -m)
-#echo $check_arch
-if [[ ${check_arch} == 'x86_64' ]]; then
-  sqlcmdpath='/usr/local/Cellar/mssql-tools18/18.*/'
-elif [[ ${check_arch} == 'arm64' ]]; then
-  sqlcmdpath='/opt/homebrew/Cellar/mssql-tools18/18.*/'
-fi
+sqlcmdpath='/opt/homebrew/Cellar/mssql-tools18/18.*/'
 
 # add colors
 autoload colors; colors
